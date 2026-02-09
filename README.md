@@ -1,68 +1,57 @@
-# ExtortionGuard
+# 🛡️ ExtortionGuard
 
-## Descripción del Proyecto
+**Protección colaborativa contra la extorsión telefónica y digital**
 
-ExtortionGuard es una iniciativa tecnológica de ciberseguridad enfocada en proteger a los usuarios de intentos de extorsión telefónica y digital. Su propósito principal es detectar, registrar y gestionar reportes de llamadas, mensajes SMS o WhatsApp sospechosos, construyendo un sistema de confianza que permita identificar números problemáticos y reducir riesgos de fraude o acoso.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://python.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://postgresql.org)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://docker.com)
 
-## Características Principales
+## 📖 Descripción
 
-### Registro de Reportes
+ExtortionGuard es una plataforma de ciberseguridad que protege a los usuarios contra intentos de extorsión telefónica y digital. A través de un sistema de reportes colaborativo, construye una base de datos de confianza para identificar números y URLs problemáticas, reduciendo el riesgo de fraudes y acoso.
 
-- Los usuarios pueden reportar números sospechosos mediante un endpoint (`POST /api/reports`)
-- Cada reporte contiene metadatos como canal (call, sms, wa), teléfono y detalles del incidente
-- Los reportes se almacenan con UUID como identificador único, asegurando trazabilidad y consistencia
+## ✨ Características Principales
 
-### Consulta de Riesgo
+### 📞 Registro de Reportes
+- Reporte de números sospechosos por llamadas, SMS o WhatsApp
+- Identificadores únicos (UUID) para trazabilidad completa
+- Metadatos detallados del incidente
 
-- A través del endpoint (`GET /api/risk/lookup`), se consulta el "score" o etiqueta de riesgo de un número
-- Este score se calcula considerando el historial de reportes y un algoritmo de validación basado en cantidad de confirmaciones y caducidad de los números
+### 📊 Evaluación de Riesgo
+- Consulta de scores de riesgo basados en historial de reportes
+- Algoritmo de validación con confirmaciones y caducidad
+- Evaluación inteligente de patrones de comportamiento
 
-### Gestión de Apelaciones
+### 🔗 Verificación de URLs
+- Detección de enlaces maliciosos y phishing
+- Múltiples versiones de verificación (v1, v2)
+- Análisis de reputación de dominios
 
-- Los usuarios pueden apelar un reporte o solicitar re-evaluación si creen que un número fue marcado erróneamente (`POST /api/appeals`)
-- Esto garantiza equilibrio entre seguridad y justicia, evitando falsos positivos
+### ⚖️ Sistema de Apelaciones
+- Proceso justo para revisar reportes erróneos
+- Prevención de falsos positivos
+- Transparencia en las decisiones
 
-### Caducidad y Confirmación
+### 🏥 Monitoreo de Salud
+- Health checks integrados para alta disponibilidad
+- Métricas de rendimiento del sistema
+- Logging y trazabilidad de requests
 
-- Los números sospechosos caducan con el tiempo, salvo que acumulen suficiente evidencia para ser considerados problemáticos
-- Se define un algoritmo de consenso: cuando un número recibe n reportes consistentes, se confirma su clasificación como de alto riesgo
+## 🚀 Instalación y Configuración
 
-### Monitoreo de Salud del Sistema
+### 📋 Requisitos Previos
+- **Python 3.13+**
+- **PostgreSQL 16+**
+- **Redis 7+**
+- **Poetry** (recomendado) o pip
+- **Docker** (opcional)
 
-- Endpoint de verificación (`GET /api/health/ready`) para asegurar que el servicio esté en funcionamiento y disponible
-
-## Valor Agregado
-
-### Prevención Proactiva
-ExtortionGuard busca adelantarse a intentos de extorsión mediante la creación de una base de datos colaborativa y dinámica.
-
-### Protección Comunitaria
-Cada reporte contribuye a proteger no solo al usuario que lo envía, sino a toda la comunidad.
-
-### Transparencia y Control
-Al permitir apelaciones y caducidad, se evita estigmatizar de forma indefinida números que pudieran haber sido reportados por error.
-
-## API Endpoints
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/api/reports` | Registrar un nuevo reporte de número sospechoso |
-| GET | `/api/risk/lookup` | Consultar el score de riesgo de un número |
-| POST | `/api/appeals` | Crear una apelación para un reporte |
-| GET | `/api/health/ready` | Verificar el estado de salud del servicio |
-
-## Instalación y Configuración
-
-### Requisitos Previos
-- Python 3.8+
-- PostgreSQL
-- Docker (opcional)
-
-### Instalación con Poetry
+### 🐍 Instalación con Poetry
 
 ```bash
 # Clonar el repositorio
-git clone <repository-url>
+git clone https://github.com/tu-usuario/ExtortionGuard.git
 cd ExtortionGuard
 
 # Instalar dependencias
@@ -72,41 +61,181 @@ poetry install
 cp .env.example .env
 # Editar .env con tus configuraciones
 
-# Ejecutar migraciones
-alembic upgrade head
+# Ejecutar migraciones de base de datos
+poetry run alembic upgrade head
 
-# Iniciar el servidor
-poetry run uvicorn app.api.main:app --reload
+# Iniciar servidor de desarrollo
+poetry run uvicorn app.main:app --reload
 ```
 
-### Instalación con Docker
+### 🐳 Instalación con Docker
 
 ```bash
-# Construir y ejecutar con Docker Compose
+# Construir y ejecutar todos los servicios
 docker-compose up --build
+
+# Solo la base de datos para desarrollo local
+docker-compose up postgres redis
 ```
 
-## Uso
+### ⚙️ Variables de Entorno
 
-Una vez que el servicio esté ejecutándose, puedes acceder a:
+Crea un archivo `.env` con las siguientes variables:
 
-- **API Documentation**: `http://localhost:8000/docs`
-- **Health Check**: `http://localhost:8000/api/health/ready`
+```env
+# Base de datos
+DATABASE_URL=postgresql://extuser:extpass@localhost:5433/extortion
 
-## Contribución
+# Redis
+REDIS_URL=redis://localhost:6379
 
-Las contribuciones son bienvenidas. Por favor:
+# Configuración de la aplicación
+APP_NAME=ExtortionGuard
+API_PREFIX=/api
+ALLOWED_ORIGINS=["http://localhost:3000", "http://localhost:8080"]
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+# Configuración de seguridad
+SECRET_KEY=tu-secret-key-super-seguro
+```
 
-## Licencia
+## 🔧 Comandos de Desarrollo
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+El proyecto incluye un `Makefile` con comandos útiles:
 
-## Contacto
+```bash
+# Servidor de desarrollo
+make dev
 
-Para preguntas o sugerencias sobre ExtortionGuard, por favor abre un issue en este repositorio.
+# Ejecutar tests
+make test
+
+# Linting y formato de código
+make lint
+make fmt
+
+# Migraciones de base de datos
+make migrate-up
+make migrate-rev
+```
+
+## 📡 API Endpoints
+
+### 🔍 Documentación Interactiva
+Una vez ejecutando el servidor, accede a:
+- **Swagger UI**: `http://localhost:8000/docs`
+- **ReDoc**: `http://localhost:8000/redoc`
+
+### 📋 Endpoints Principales
+
+| Método | Endpoint | Descripción |
+|--------|----------|-------------|
+| `POST` | `/api/reports` | Registrar reporte de número sospechoso |
+| `GET` | `/api/risk/lookup` | Consultar score de riesgo de un número |
+| `POST` | `/api/appeals` | Crear apelación para un reporte |
+| `POST` | `/api/urlcheck/check` | Verificar URL maliciosa (v1) |
+| `POST` | `/api/urlcheck/check/v2` | Verificar URL maliciosa (v2) |
+| `GET` | `/api/health/ready` | Health check del servicio |
+| `GET` | `/health` | Health check simple |
+
+### 📝 Ejemplos de Uso
+
+**Reportar número sospechoso:**
+```bash
+curl -X POST "http://localhost:8000/api/reports" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "phone": "+52123456789",
+    "country": "MX",
+    "channel": "call",
+    "description": "Intento de extorsión"
+  }'
+```
+
+**Consultar riesgo de número:**
+```bash
+curl "http://localhost:8000/api/risk/lookup?phone=+52123456789&country=MX"
+```
+
+**Verificar URL:**
+```bash
+curl -X POST "http://localhost:8000/api/urlcheck/check" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://ejemplo-sospechoso.com"}'
+```
+
+## 🏗️ Arquitectura del Proyecto
+
+```
+app/
+├── api/                 # Capa de API (FastAPI)
+│   ├── routes/         # Definición de endpoints
+│   └── deps.py         # Dependencias compartidas
+├── core/               # Configuración central
+│   ├── config.py       # Settings de la aplicación
+│   ├── logging.py      # Configuración de logs
+│   └── security.py     # Utilidades de seguridad
+├── db/                 # Capa de base de datos
+│   ├── models.py       # Modelos SQLAlchemy
+│   └── session.py      # Sesiones de DB
+├── middleware/         # Middlewares personalizados
+├── schemas/            # Schemas Pydantic (request/response)
+├── services/           # Lógica de negocio
+├── utils/              # Utilidades compartidas
+└── tests/              # Tests automatizados
+```
+
+## 🧪 Testing
+
+```bash
+# Ejecutar todos los tests
+poetry run pytest
+
+# Con cobertura
+poetry run pytest --cov=app --cov-report=term-missing
+
+# Test específico
+poetry run pytest app/tests/test_reports.py -v
+```
+
+## 📊 Tecnologías Utilizadas
+
+- **Backend**: FastAPI, Python 3.13
+- **Base de Datos**: PostgreSQL con SQLAlchemy ORM
+- **Cache**: Redis
+- **Validación**: Pydantic
+- **Migraciones**: Alembic
+- **Testing**: Pytest
+- **Linting**: Ruff
+- **Containerización**: Docker & Docker Compose
+
+## 🤝 Contribución
+
+Las contribuciones son bienvenidas. Por favor sigue estos pasos:
+
+1. **Fork** el proyecto
+2. **Crea** una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
+3. **Commit** tus cambios (`git commit -m 'Agrega nueva característica'`)
+4. **Push** a la rama (`git push origin feature/nueva-caracteristica`)
+5. **Abre** un Pull Request
+
+### 📝 Convenciones de Código
+- Sigue PEP 8 para Python
+- Usa `ruff` para linting y formato
+- Incluye tests para nuevas funcionalidades
+- Documenta APIs con docstrings
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 🆘 Soporte
+
+¿Tienes preguntas o necesitas ayuda?
+
+- 📫 **Issues**: [GitHub Issues](https://github.com/tu-usuario/ExtortionGuard/issues)
+- 📧 **Email**: team@extortionguard.com
+- 📚 **Wiki**: Consulta nuestra [documentación](https://github.com/tu-usuario/ExtortionGuard/wiki)
+
+---
+
+**🛡️ Protegiendo comunidades, un reporte a la vez.**
