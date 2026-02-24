@@ -1,53 +1,53 @@
 # 🛡️ ExtortionGuard
 
-**Protección colaborativa contra la extorsión telefónica y digital**
+**Collaborative protection against phone and digital extortion**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://python.org)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://postgresql.org)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://docker.com)
 
-## 📖 Descripción
+## 📖 Description
 
-ExtortionGuard es una plataforma de ciberseguridad que protege a los usuarios contra intentos de extorsión telefónica y digital. A través de un sistema de reportes colaborativo, construye una base de datos de confianza para identificar números y URLs problemáticas, reduciendo el riesgo de fraudes y acoso.
+ExtortionGuard is a cybersecurity platform that protects users against phone and digital extortion attempts. Through a collaborative reporting system, it builds a trust database to identify problematic numbers and URLs, reducing the risk of fraud and harassment.
 
-## ✨ Características Principales
+## ✨ Key Features
 
-### 📞 Registro de Reportes
-- Reporte de números sospechosos por llamadas, SMS o WhatsApp
-- Identificadores únicos (UUID) para trazabilidad completa
-- Metadatos detallados del incidente
+### 📞 Report Registration
+- Report suspicious numbers from calls, SMS or WhatsApp
+- Unique identifiers (UUID) for complete traceability
+- Detailed incident metadata
 
-### 📊 Evaluación de Riesgo
-- Consulta de scores de riesgo basados en historial de reportes
-- Algoritmo de validación con confirmaciones y caducidad
-- Evaluación inteligente de patrones de comportamiento
+### 📊 Risk Assessment
+- Query risk scores based on report history
+- Validation algorithm with confirmations and expiration
+- Intelligent evaluation of behavior patterns
 
-### 🔗 Verificación de URLs
-- Detección de enlaces maliciosos y phishing
-- Múltiples versiones de verificación (v1, v2)
-- Análisis de reputación de dominios
+### 🔗 URL Verification
+- Detection of malicious links and phishing
+- Multiple verification versions (v1, v2)
+- Domain reputation analysis
 
-### ⚖️ Sistema de Apelaciones
-- Proceso justo para revisar reportes erróneos
-- Prevención de falsos positivos
-- Transparencia en las decisiones
+### ⚖️ Appeals System
+- Fair process to review erroneous reports
+- Prevention of false positives
+- Transparency in decisions
 
-### 🏥 Monitoreo de Salud
-- Health checks integrados para alta disponibilidad
-- Métricas de rendimiento del sistema
-- Logging y trazabilidad de requests
+### 🏥 Health Monitoring
+- Integrated health checks for high availability
+- System performance metrics
+- Request logging and traceability
 
-## 🚀 Instalación y Configuración
+## 🚀 Installation and Configuration
 
-### 📋 Requisitos Previos
+### 📋 Prerequisites
 - **Python 3.13+**
 - **PostgreSQL 16+**
 - **Redis 7+**
-- **Poetry** (recomendado) o pip
-- **Docker** (opcional)
+- **Poetry** (recommended) or pip
+- **Docker** (optional)
 
-### 🐍 Instalación con Poetry
+### 🐍 Installation with Poetry
 
 ```bash
 # Clonar el repositorio
@@ -64,38 +64,38 @@ cp .env.example .env
 # Ejecutar migraciones de base de datos
 poetry run alembic upgrade head
 
-# Iniciar servidor de desarrollo
+# Start development server
 poetry run uvicorn app.main:app --reload
 ```
 
-### 🐳 Instalación con Docker
+### 🐳 Installation with Docker
 
 ```bash
-# Construir y ejecutar todos los servicios
+# Build and run all services
 docker-compose up --build
 
-# Solo la base de datos para desarrollo local
+# Only database for local development
 docker-compose up postgres redis
 ```
 
-### ⚙️ Variables de Entorno
+### ⚙️ Environment Variables
 
-Crea un archivo `.env` con las siguientes variables:
+Create a `.env` file with the following variables:
 
 ```env
-# Base de datos
+# Database
 DATABASE_URL=postgresql://extuser:extpass@localhost:5433/extortion
 
 # Redis
 REDIS_URL=redis://localhost:6379
 
-# Configuración de la aplicación
+# Application configuration
 APP_NAME=ExtortionGuard
 API_PREFIX=/api
 ALLOWED_ORIGINS=["http://localhost:3000", "http://localhost:8080"]
 
-# Configuración de seguridad
-SECRET_KEY=tu-secret-key-super-seguro
+# Security configuration
+SECRET_KEY=your-super-secure-secret-key
 ```
 
 ## 🔧 Comandos de Desarrollo
@@ -127,19 +127,19 @@ Una vez ejecutando el servidor, accede a:
 
 ### 📋 Endpoints Principales
 
-| Método | Endpoint | Descripción |
+| Method | Endpoint | Description |
 |--------|----------|-------------|
-| `POST` | `/api/reports` | Registrar reporte de número sospechoso |
-| `GET` | `/api/risk/lookup` | Consultar score de riesgo de un número |
-| `POST` | `/api/appeals` | Crear apelación para un reporte |
-| `POST` | `/api/urlcheck/check` | Verificar URL maliciosa (v1) |
-| `POST` | `/api/urlcheck/check/v2` | Verificar URL maliciosa (v2) |
-| `GET` | `/api/health/ready` | Health check del servicio |
-| `GET` | `/health` | Health check simple |
+| `POST` | `/api/reports` | Register suspicious number report |
+| `GET` | `/api/risk/lookup` | Query risk score for a number |
+| `POST` | `/api/appeals` | Create appeal for a report |
+| `POST` | `/api/urlcheck/check` | Check malicious URL (v1) |
+| `POST` | `/api/urlcheck/check/v2` | Check malicious URL (v2) |
+| `GET` | `/api/health/ready` | Service health check |
+| `GET` | `/health` | Simple health check |
 
-### 📝 Ejemplos de Uso
+### 📝 Usage Examples
 
-**Reportar número sospechoso:**
+**Report suspicious number:**
 ```bash
 curl -X POST "http://localhost:8000/api/reports" \
   -H "Content-Type: application/json" \
@@ -147,95 +147,95 @@ curl -X POST "http://localhost:8000/api/reports" \
     "phone": "+52123456789",
     "country": "MX",
     "channel": "call",
-    "description": "Intento de extorsión"
+    "description": "Extortion attempt"
   }'
 ```
 
-**Consultar riesgo de número:**
+**Query number risk:**
 ```bash
 curl "http://localhost:8000/api/risk/lookup?phone=+52123456789&country=MX"
 ```
 
-**Verificar URL:**
+**Verify URL:**
 ```bash
 curl -X POST "http://localhost:8000/api/urlcheck/check" \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://ejemplo-sospechoso.com"}'
+  -d '{"url": "https://suspicious-example.com"}'
 ```
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Project Architecture
 
 ```
 app/
-├── api/                 # Capa de API (FastAPI)
-│   ├── routes/         # Definición de endpoints
-│   └── deps.py         # Dependencias compartidas
-├── core/               # Configuración central
-│   ├── config.py       # Settings de la aplicación
-│   ├── logging.py      # Configuración de logs
-│   └── security.py     # Utilidades de seguridad
-├── db/                 # Capa de base de datos
-│   ├── models.py       # Modelos SQLAlchemy
-│   └── session.py      # Sesiones de DB
-├── middleware/         # Middlewares personalizados
-├── schemas/            # Schemas Pydantic (request/response)
-├── services/           # Lógica de negocio
-├── utils/              # Utilidades compartidas
-└── tests/              # Tests automatizados
+├── api/                 # API Layer (FastAPI)
+│   ├── routes/         # Endpoint definitions
+│   └── deps.py         # Shared dependencies
+├── core/               # Core configuration
+│   ├── config.py       # Application settings
+│   ├── logging.py      # Logging configuration
+│   └── security.py     # Security utilities
+├── db/                 # Database layer
+│   ├── models.py       # SQLAlchemy models
+│   └── session.py      # DB sessions
+├── middleware/         # Custom middlewares
+├── schemas/            # Pydantic schemas (request/response)
+├── services/           # Business logic
+├── utils/              # Shared utilities
+└── tests/              # Automated tests
 ```
 
 ## 🧪 Testing
 
 ```bash
-# Ejecutar todos los tests
+# Run all tests
 poetry run pytest
 
-# Con cobertura
+# With coverage
 poetry run pytest --cov=app --cov-report=term-missing
 
-# Test específico
+# Specific test
 poetry run pytest app/tests/test_reports.py -v
 ```
 
-## 📊 Tecnologías Utilizadas
+## 📊 Technologies Used
 
 - **Backend**: FastAPI, Python 3.13
-- **Base de Datos**: PostgreSQL con SQLAlchemy ORM
+- **Database**: PostgreSQL with SQLAlchemy ORM
 - **Cache**: Redis
-- **Validación**: Pydantic
-- **Migraciones**: Alembic
+- **Validation**: Pydantic
+- **Migrations**: Alembic
 - **Testing**: Pytest
 - **Linting**: Ruff
-- **Containerización**: Docker & Docker Compose
+- **Containerization**: Docker & Docker Compose
 
-## 🤝 Contribución
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas. Por favor sigue estos pasos:
+Contributions are welcome. Please follow these steps:
 
-1. **Fork** el proyecto
-2. **Crea** una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
-3. **Commit** tus cambios (`git commit -m 'Agrega nueva característica'`)
-4. **Push** a la rama (`git push origin feature/nueva-caracteristica`)
-5. **Abre** un Pull Request
+1. **Fork** the project
+2. **Create** a feature branch (`git checkout -b feature/new-feature`)
+3. **Commit** your changes (`git commit -m 'Add new feature'`)
+4. **Push** to the branch (`git push origin feature/new-feature`)
+5. **Open** a Pull Request
 
-### 📝 Convenciones de Código
-- Sigue PEP 8 para Python
-- Usa `ruff` para linting y formato
-- Incluye tests para nuevas funcionalidades
-- Documenta APIs con docstrings
+### 📝 Code Conventions
+- Follow PEP 8 for Python
+- Use `ruff` for linting and formatting
+- Include tests for new functionalities
+- Document APIs with docstrings
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+This project is under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-## 🆘 Soporte
+## 🆘 Support
 
-¿Tienes preguntas o necesitas ayuda?
+Do you have questions or need help?
 
-- 📫 **Issues**: [GitHub Issues](https://github.com/tu-usuario/ExtortionGuard/issues)
+- 📫 **Issues**: [GitHub Issues](https://github.com/your-user/ExtortionGuard/issues)
 - 📧 **Email**: team@extortionguard.com
-- 📚 **Wiki**: Consulta nuestra [documentación](https://github.com/tu-usuario/ExtortionGuard/wiki)
+- 📚 **Wiki**: Check our [documentation](https://github.com/your-user/ExtortionGuard/wiki)
 
 ---
 
-**🛡️ Protegiendo comunidades, un reporte a la vez.**
+**🛡️ Protecting communities, one report at a time.**
