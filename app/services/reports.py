@@ -20,7 +20,7 @@ def create_report(db: Session, payload: ReportIn) -> ReportOut:
     db.flush()
 
 
-    # Anti-abuso por día (por simplicidad, por número)
+    # Daily anti-abuse (for simplicity, per number)
     today = datetime.now(timezone.utc).date()
     start = datetime.combine(today, datetime.min.time(), tzinfo=timezone.utc)
     end = datetime.combine(today, datetime.max.time(), tzinfo=timezone.utc)
