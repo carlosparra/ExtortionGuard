@@ -20,21 +20,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Middlewares de seguridad y trazabilidad
+# Security and traceability middlewares
 app.add_middleware(RequestIDMiddleware)
 app.add_middleware(SecurityHeadersMiddleware)
 
-# Rutas principales bajo /api
+# Main routes under /api
 app.include_router(api_router, prefix=settings.API_PREFIX)
 
-# --- Extras útiles ---
+# --- Useful extras ---
 
-# Redirect desde / a la documentación (Swagger UI)
+# Redirect from / to documentation (Swagger UI)
 @app.get("/", include_in_schema=False)
 def root():
     return RedirectResponse(url="/docs")
 
-# Healthcheck global sencillo
+# Simple global healthcheck
 @app.get("/health", tags=["health"])
 def health():
     return {"status": "ok"}
