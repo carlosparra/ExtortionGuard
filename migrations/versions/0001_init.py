@@ -29,7 +29,7 @@ def upgrade():
         sa.Column("reporter_id", sa.String(64)),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.Column("ip_hash", sa.String(64)),
-        sa.Column("is_moderated", sa.Boolean, nullable=False, server_default=sa.text("false")),  # ← aquí
+        sa.Column("is_moderated", sa.Boolean, nullable=False, server_default=sa.text("false")),  # ← here
         sa.Index("ix_reports_number_time", "number_id", "created_at"),
         sa.UniqueConstraint("number_id", "reporter_id", "channel", name="uq_report_once_per_reporter_channel"),
     )
