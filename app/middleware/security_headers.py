@@ -15,7 +15,7 @@
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 
-# Rutas de documentación y assets
+# Documentation and assets routes
 DOCS_ALLOW = (
     "/docs", "/redoc", "/openapi.json",
     "/static/swagger-ui", "/static/redoc", "/static/swagger-ui-bundle.js",
@@ -26,7 +26,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         response = await call_next(request)
 
-        # Headers base (seguros)
+        # Base headers (secure)
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
         response.headers.setdefault("X-Frame-Options", "DENY")
         response.headers.setdefault("Referrer-Policy", "no-referrer")
@@ -34,13 +34,13 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
 
         path = request.url.path
 
-        # 🔓 NO aplicar CSP en docs/recursos de docs (evita pantalla en blanco)
+        # 🔓 DO NOT apply CSP on docs/docs resources (avoids blank screen)
         if any(path.startswith(p) for p in DOCS_ALLOW):
-            # eliminar CSP si algún handler previo lo puso
+            # remove CSP if any previous handler set it
             if "Content-Security-Policy" in response.headers:
                 del response.headers["Content-Security-Policy"]
         else:
-            # 🔒 CSP estricta para el resto de la API
+            # 🔒 Strict CSP for the rest of the API
             response.headers["Content-Security-Policy"] = (
                 "default-src 'none'; frame-ancestors 'none'"
             )
