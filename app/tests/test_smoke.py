@@ -14,7 +14,7 @@ def test_health():
 def test_report_lookup_flow():
     r = client.post("/api/reports", json={
     "phone": "5512345678", "country": "MX", "channel": "call",
-    "reason": "threat", "details": "Exigieron depósito", "reporter_id": "t1"
+    "reason": "threat", "details": "Demanded deposit", "reporter_id": "t1"
     })
     assert r.status_code == 200
     rid = r.json()["report_id"]
