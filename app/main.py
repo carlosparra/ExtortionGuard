@@ -9,7 +9,7 @@ from app.api.routes import api_router
 configure_logging()
 app = FastAPI(title="ExtortionGuard", version="0.1.0")
 
-# CORS abierto en dev; ajusta según tu Settings si ya lo tienes
+# Open CORS in dev; adjust according to your Settings if you have it
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], allow_credentials=True,
