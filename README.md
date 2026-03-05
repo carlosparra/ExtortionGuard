@@ -50,18 +50,18 @@ ExtortionGuard is a cybersecurity platform that protects users against phone and
 ### 🐍 Installation with Poetry
 
 ```bash
-# Clonar el repositorio
-git clone https://github.com/tu-usuario/ExtortionGuard.git
+# Clone the repository
+git clone https://github.com/your-user/ExtortionGuard.git
 cd ExtortionGuard
 
-# Instalar dependencias
+# Install dependencies
 poetry install
 
-# Configurar variables de entorno
+# Configure environment variables
 cp .env.example .env
-# Editar .env con tus configuraciones
+# Edit .env with your configurations
 
-# Ejecutar migraciones de base de datos
+# Run database migrations
 poetry run alembic upgrade head
 
 # Start development server
@@ -98,34 +98,34 @@ ALLOWED_ORIGINS=["http://localhost:3000", "http://localhost:8080"]
 SECRET_KEY=your-super-secure-secret-key
 ```
 
-## 🔧 Comandos de Desarrollo
+## 🔧 Development Commands
 
-El proyecto incluye un `Makefile` con comandos útiles:
+The project includes a `Makefile` with useful commands:
 
 ```bash
-# Servidor de desarrollo
+# Development server
 make dev
 
-# Ejecutar tests
+# Run tests
 make test
 
-# Linting y formato de código
+# Code linting and formatting
 make lint
 make fmt
 
-# Migraciones de base de datos
+# Database migrations
 make migrate-up
 make migrate-rev
 ```
 
 ## 📡 API Endpoints
 
-### 🔍 Documentación Interactiva
-Una vez ejecutando el servidor, accede a:
+### 🔍 Interactive Documentation
+Once the server is running, access:
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
 
-### 📋 Endpoints Principales
+### 📋 Main Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
